@@ -46,22 +46,27 @@
         </div>
     </div>
     <script>
+        
         let computer = "";
-        let wins = 0;
-        let lose = 0;
-        let tie = 0;
+        let score = JSON.parse(localStorage.getItem('score'))||{wins:0,lose:0,tie:0}
+        document.getElementById("wins").innerHTML = `Wins:${score.wins}`;
+        document.getElementById("lose").innerHTML = `Lose:${score.lose}`;
+        document.getElementById("tie").innerHTML = `Ties:${score.tie}`;
+
 
         function reset() {
-            wins -= wins;
-            document.getElementById("wins").innerHTML = `Wins:${wins};`
-            lose -= lose;
-            document.getElementById("lose").innerHTML = `Lose:${lose};`
-            tie -= tie;
-            document.getElementById("tie").innerHTML = `Ties:${tie};`
+            score.wins =0;
+            document.getElementById("wins").innerHTML = `Wins:${score.wins}`;
+            score.lose =0;
+            document.getElementById("lose").innerHTML = `Lose:${score.lose}`;
+            score.tie =0;
+            document.getElementById("tie").innerHTML = `Ties:${score.tie}`;
+            localStorage.removeItem("score")
             document.getElementById("you").innerHTML = "";
             document.getElementById("bot").innerHTML = "";
             document.getElementById("result").innerHTML = "Choose ROCK/PAPER/SCISSOR";
         }
+        
 
         function userSide(user) {
             let value = Math.random()
@@ -87,19 +92,22 @@
             }
 
             if (user === computer) {
-                tie += 1;
-                document.getElementById("tie").innerHTML = `Ties:${tie};`
+                score.tie += 1;
+                document.getElementById("tie").innerHTML = `Ties:${score.tie}`;
                 document.getElementById("result").innerHTML = `${user} VS ${computer} its a TIE`;
             } else if (user === "ROCK" && computer === "SCISSORS" || user === "PAPER" && computer === "ROCK" || user === "SCISSORS" && computer === "PAPER") {
-                wins += 1;
-                document.getElementById("wins").innerHTML = `Wins:${wins};`
+                score.wins += 1;
+                document.getElementById("wins").innerHTML = `Wins:${score.wins}`;
                 document.getElementById("result").innerHTML = `${user} beats ${computer}, you WIN`;
             } else {
-                lose += 1;
-                document.getElementById("lose").innerHTML = `Lose:${lose};`
+                score.lose += 1;
+                document.getElementById("lose").innerHTML = `Lose:${score.lose}`;
                 document.getElementById("result").innerHTML = `${computer} beats ${user}, you LOSE`;
             }
+           localStorage.setItem("score",JSON.stringify(score)) 
         }
+        
     </script>
 </body>
+
 </html>
