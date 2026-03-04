@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="border: 2px solid black;width: 830px;margin: auto;background-color: black;padding: 20px;">
+        <div style="display: flex;margin-top: 20px;padding: 10px;gap: 5px;">
+            <div style="border: 2px solid rgb(247, 244, 244);font-size:5cm;cursor: pointer;width: 100%;height: 100%;border-radius: 200px;"
+                onclick="userSide('ROCK')"">✊</div>
+            <div  style=" border: 2px solid rgb(250, 248, 248);font-size:5cm;cursor: pointer;width: 100%;height:
+                100%;border-radius: 200px;" onclick="userSide('PAPER')">✋</div>
+            <div style="border: 2px solid rgb(252, 249, 249);font-size:5cm;cursor: pointer;width: 100%;height: 100%;border-radius: 200px;"
+                onclick="userSide('SCISSORS')">✌️</div>
+        </div>
+        <div style="display: flex;justify-content: center;gap: 20px;margin: 20px;">
+            <div id="wins"
+                style="display:flex;border: solid rgb(245, 236, 236);color: beige;width: fit-content;height: fit-content;padding: 6px;">
+                Wins:0</div>
+            <div id="lose"
+                style="display:flex;border: solid rgb(248, 245, 245);color: beige;width: fit-content;height: fit-content;padding: 6px;">
+                Lose:0</div>
+            <div id="tie"
+                style="display:flex;border: solid rgb(248, 242, 242);color: beige;width: fit-content;height: fit-content;padding: 6px;">
+                Ties:0</div>
+        </div>
+        <div style="padding: 2px;">
+            <div style="display: flex;justify-content: center;">
+                <div>
+                    <label for="you" style="color: beige;">You:</label>
+                    <div id="you" style="font-size: 2cm;"></div>
+                </div>
+                <div id="result" style="color: beige;margin: auto;font-size: 1cm;">Choose ROCK/PAPER/SCISSOR</div>
+                <div>
+                    <label for="bot" style="color: beige;">Computer:</label>
+                    <div id="bot" style="font-size: 2cm;"></div>
+                </div>
+            </div>
+            <div style="display: flex;justify-content: center;">
+                <button type="button" onclick="reset()">RESET</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let computer = "";
+        let wins = 0;
+        let lose = 0;
+        let tie = 0;
+
+        function reset() {
+            wins -= wins;
+            document.getElementById("wins").innerHTML = `Wins:${wins};`
+            lose -= lose;
+            document.getElementById("lose").innerHTML = `Lose:${lose};`
+            tie -= tie;
+            document.getElementById("tie").innerHTML = `Ties:${tie};`
+            document.getElementById("you").innerHTML = "";
+            document.getElementById("bot").innerHTML = "";
+            document.getElementById("result").innerHTML = "Choose ROCK/PAPER/SCISSOR";
+        }
+
+        function userSide(user) {
+            let value = Math.random()
+
+            if (user === "ROCK") {
+                document.getElementById("you").innerHTML = "✊";
+            } else if (user === "PAPER") {
+                document.getElementById("you").innerHTML = "✋";
+            } else {
+                document.getElementById("you").innerHTML = "✌️";
+            }
+
+            if (value >= 0 && value <= 1 / 3) {
+                computer = "ROCK";
+                document.getElementById("bot").innerHTML = "✊";
+            }
+            else if (value > 1 / 3 && value <= 2 / 3) {
+                computer = "PAPER";
+                document.getElementById("bot").innerHTML = "✋";
+            } else {
+                computer = "SCISSORS";
+                document.getElementById("bot").innerHTML = "✌️";
+            }
+
+            if (user === computer) {
+                tie += 1;
+                document.getElementById("tie").innerHTML = `Ties:${tie};`
+                document.getElementById("result").innerHTML = `${user} VS ${computer} its a TIE`;
+            } else if (user === "ROCK" && computer === "SCISSORS" || user === "PAPER" && computer === "ROCK" || user === "SCISSORS" && computer === "PAPER") {
+                wins += 1;
+                document.getElementById("wins").innerHTML = `Wins:${wins};`
+                document.getElementById("result").innerHTML = `${user} beats ${computer}, you WIN`;
+            } else {
+                lose += 1;
+                document.getElementById("lose").innerHTML = `Lose:${lose};`
+                document.getElementById("result").innerHTML = `${computer} beats ${user}, you LOSE`;
+            }
+        }
+    </script>
+</body>
+</html>
