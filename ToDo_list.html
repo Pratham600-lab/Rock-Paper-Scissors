@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to_do_list</title>
+</head>
+<body>
+    <div style="display: flex;justify-content: center;">
+
+        <div style="border :solid black;padding: 5px;">
+            <div style="display: flex;justify-content: center;">
+                <h1>To Do Lists</h1>
+            </div>
+            <div style="display: grid;grid-template-columns: 190px 111px 60px;column-gap: 2px;">
+                <input class="Task" placeholder="Enter Task.." onkeydown="Press(event)" required>
+                <input type="date" class="DueDate" onkeydown="Press(event)" required>
+                <button onclick="Listadd()" style="width: 60px;color: aliceblue;background-color: green;">ADD</button>
+            </div>
+            <div class="list"
+                style="display: grid;grid-template-columns: 190px 111px 60px;border: solid black;min-height: 20px;max-height: 200px;margin-top: 5px;overflow-y: scroll;padding: 2px;row-gap: 2px;">
+            </div>
+        </div>
+    </div>
+    <script>
+        let TaskList = [];
+        function ListDisplay() {
+            let L = '';
+            TaskList.forEach(function(element,i){
+                const { name, date } = element;
+                const html = `<div>${name}</div><div>${date}</div><button onclick="DeleteTask(${i})" style="color: aliceblue;background-color: red;">Delete</button>`;
+                L += html;
+            });
+            document.querySelector(".list").innerHTML = L;
+        }
+        function Listadd() {
+            const EnteredList = document.querySelector(".Task");
+            const name = EnteredList.value
+            const EnteredDate = document.querySelector(".DueDate");
+            const date = EnteredDate.value;
+            TaskList.push({ name, date });
+            EnteredList.value = '';
+            EnteredDate.value = '';
+            ListDisplay();
+        }
+        function Press(event) {
+            if (event.key === "Enter") {
+                Listadd();
+            }
+        }
+        function DeleteTask(index) {
+            TaskList.splice(index, 1);
+            ListDisplay();
+        }
+    </script>
+</body>
+</html>
